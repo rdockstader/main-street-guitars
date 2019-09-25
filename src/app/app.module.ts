@@ -11,6 +11,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { GuitarsComponent } from './guitars/guitars.component';
 import { GuitarDetailsComponent } from './guitars/guitar-details/guitar-details.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { GuitarDetailsComponent } from './guitars/guitar-details/guitar-details.
     SignupComponent,
     LoginComponent,
     GuitarsComponent,
-    GuitarDetailsComponent
+    GuitarDetailsComponent,
+    HeaderComponent,
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
