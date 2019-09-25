@@ -13,6 +13,7 @@ import { GuitarsComponent } from './guitars/guitars.component';
 import { GuitarDetailsComponent } from './guitars/guitar-details/guitar-details.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     GuitarsComponent,
     GuitarDetailsComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
