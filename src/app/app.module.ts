@@ -14,6 +14,11 @@ import { GuitarDetailsComponent } from './guitars/guitar-details/guitar-details.
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { HomeComponent } from './home/home.component';
+import { GuitarsFiltersComponent } from './guitars/guitars-filters/guitars-filters.component';
+import { HomeHeaderComponent } from './home/home-header/home-header.component';
+import { HomeFeaturedComponent } from './home/home-featured/home-featured.component';
+import { HomeFeaturedCardComponent } from './home/home-featured/home-featured-card/home-featured-card.component';
+import { GuitarsHeaderComponent } from './guitars/guitars-header/guitars-header.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,12 @@ import { HomeComponent } from './home/home.component';
     GuitarDetailsComponent,
     HeaderComponent,
     SidenavListComponent,
-    HomeComponent
+    HomeComponent,
+    GuitarsFiltersComponent,
+    HomeHeaderComponent,
+    HomeFeaturedComponent,
+    HomeFeaturedCardComponent,
+    GuitarsHeaderComponent
   ],
   imports: [
     BrowserModule,
