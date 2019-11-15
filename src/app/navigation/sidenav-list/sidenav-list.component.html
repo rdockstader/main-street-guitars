@@ -5,7 +5,11 @@
     </a>
     <a mat-list-item [routerLink]="['/signup']" (click)="onToggleSidenav()">
       <mat-icon>face</mat-icon>
-      <span class="nav-caption">Sign up</span>
+      <span class="nav-caption">Sign Up</span>
+    </a>
+    <a mat-list-item [routerLink]="['/admin']" (click)="onToggleSidenav()">
+      <mat-icon>gear</mat-icon>
+      <span class="nav-caption">Site Admin</span>
     </a>
     <mat-list-item>
       <button mat-icon-button (click)="onToggleSidenav()">

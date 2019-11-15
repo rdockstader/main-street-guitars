@@ -1,0 +1,9 @@
+section {
+  margin: 15px;
+  width: 100%;
+}
+
+.span-1-of-3 {
+  width: 30%;
+  margin-bottom: 15px;
+}

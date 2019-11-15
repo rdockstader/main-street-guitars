@@ -1,1 +1,14 @@
-<p>home works!</p>
+<section>
+  <app-home-header></app-home-header>
+</section>
+<mat-divider></mat-divider>
+<section>
+  <app-home-featured></app-home-featured>
+</section>
+<mat-divider></mat-divider>
+<section fxLayout="row">
+  <app-guitars-filters></app-guitars-filters>
+  <div class="full-width" fxLayout="column">
+    <app-guitars></app-guitars>
+  </div>
+</section>
