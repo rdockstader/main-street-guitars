@@ -1,54 +1,44 @@
 import { MakesService } from './makes.service';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
-import { formatDate } from '@angular/common';
 import { Make } from './make.model';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-makes',
-  templateUrl: './makes.component.html',
-  styleUrls: ['./makes.component.css']
+  styleUrls: ['makes.component.css'],
+  templateUrl: 'makes.component.html',
 })
 export class MakesComponent implements OnInit {
-  displayedColumns = ['value', 'Add Date', 'Delete'];
+  displayedColumns: string[] = ['makeID', 'value', 'addDate', 'delete'];
+  dataSource: MatTableDataSource<Make>;
   makes: Make[] = [];
-  makesDataSource = new MatTableDataSource<{modelId: string,
-                                                                                    value: string,
-                                                                                    addDate: Date,
-                                                                                    delete: string}>();
 
-  constructor(private makesService: MakesService) { }
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
+  constructor(private makesService: MakesService) {}
+
+  private getMakes() {
+    this.makes = this.makesService.getMakes();
+    this.dataSource = new MatTableDataSource(this.makes);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   ngOnInit() {
-    this.makes = this.makesService.getMakes();
-    this.buildDatasource();
     this.makesService.makesChanged.subscribe(() => {
-      this.makes = this.makesService.getMakes();
-      this.buildDatasource();
+      this.getMakes();
     });
+    this.getMakes();
   }
 
-  onSubmit() {
-    console.log('submit called');
-  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  onDeleteModel(MakeID: number) {
-    this.makesService.RemoveMake(MakeID);
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
-
-  private buildDatasource() {
-    const rows = [];
-    this.makes.forEach(make => {
-      const row = {
-        id: make.makeID,
-        value: make.value,
-        addDate: formatDate(make.addDate, 'shortDate', 'en-US'),
-        delete: ''
-      };
-      rows.push(row);
-    });
-    console.log(rows);
-    this.makesDataSource.data = rows;
-  }
-
 }
