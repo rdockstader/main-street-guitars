@@ -42,7 +42,6 @@ import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-ma
     HomeHeaderComponent,
     HomeFeaturedComponent,
     HomeFeaturedCardComponent,
-<<<<<<< HEAD
     GuitarsHeaderComponent,
     AdminComponent,
     AdminGuitarsComponent,
@@ -52,9 +51,6 @@ import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-ma
     MakesComponent,
     SubmodelsComponent,
     AddMakeComponent
-=======
-    GuitarsHeaderComponent
->>>>>>> fb5503226f4228bec1ee3fd0515653db61c547c9
   ],
   imports: [
     BrowserModule,
