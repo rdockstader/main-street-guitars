@@ -41,4 +41,8 @@ export class MakesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  onDelete(makeID: number) {
+    this.makesService.RemoveMake(makeID);
+  }
 }

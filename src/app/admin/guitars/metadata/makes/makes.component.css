@@ -14,3 +14,8 @@ table {
 td, th {
   width: 25%;
 }
+
+.delete {
+  color: red;
+  cursor: pointer;
+}

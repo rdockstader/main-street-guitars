@@ -1,22 +1,21 @@
 <mat-sidenav-container>
-    <mat-sidenav #sidnav>
+    <mat-sidenav mode="side" opened>
         <mat-nav-list>
             <a mat-list-item [routerLink]="['/admin/guitars']">
-              <mat-icon>input</mat-icon>
+              <mat-icon>volume_up</mat-icon>
               <span class="nav-caption">Guitars</span>
             </a>
             <a mat-list-item [routerLink]="['/admin/guitars/metadata']">
-              <mat-icon>face</mat-icon>
+              <mat-icon>settings_applications</mat-icon>
               <span class="nav-caption">Guitar Metadata</span>
             </a>
             <a mat-list-item [routerLink]="['/admin/users']">
-              <mat-icon>gear</mat-icon>
+              <mat-icon>face</mat-icon>
               <span class="nav-caption">Users</span>
             </a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <button mat-raised-button (click)="sidnav.toggle()">Open Sidenav</button>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

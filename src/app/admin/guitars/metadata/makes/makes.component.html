@@ -36,7 +36,9 @@
             <!-- Delete Column -->
             <ng-container matColumnDef="delete">
               <th mat-header-cell *matHeaderCellDef> Delete </th>
-              <td mat-cell *matCellDef="let row" [style.color]="row.color"> bleh </td>
+              <td mat-cell *matCellDef="let row">
+                  <a (click)="onDelete(row.makeID)"><i class="material-icons delete">delete</i></a>
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
