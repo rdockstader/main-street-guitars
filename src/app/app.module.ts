@@ -25,8 +25,8 @@ import { MetadataComponent } from './admin/guitars/metadata/metadata.component';
 import { UsersComponent } from './admin/users/users.component';
 import { ModelsComponent } from './admin/guitars/metadata/models/models.component';
 import { MakesComponent } from './admin/guitars/metadata/makes/makes.component';
-import { SubmodelsComponent } from './admin/guitars/metadata/submodels/submodels.component';
 import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-make.component';
+import { AddModelComponent } from './admin/guitars/metadata/models/add-model/add-model.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +49,8 @@ import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-ma
     UsersComponent,
     ModelsComponent,
     MakesComponent,
-    SubmodelsComponent,
-    AddMakeComponent
+    AddMakeComponent,
+    AddModelComponent
   ],
   imports: [
     BrowserModule,
