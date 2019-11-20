@@ -28,6 +28,8 @@ import { MakesComponent } from './admin/guitars/metadata/makes/makes.component';
 import { SubmodelsComponent } from './admin/guitars/metadata/submodels/submodels.component';
 import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-make.component';
 
+import { AuthService } from './auth/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +62,7 @@ import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-ma
     FlexLayoutModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
