@@ -29,6 +29,8 @@ import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-ma
 import { AddModelComponent } from './admin/guitars/metadata/models/add-model/add-model.component';
 
 import { AuthService } from './auth/auth.service';
+import { GuitarService } from './guitars/guitar.service';
+import { AddGuitarComponent } from './admin/guitars/add-guitar/add-guitar.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { AuthService } from './auth/auth.service';
     ModelsComponent,
     MakesComponent,
     AddMakeComponent,
-    AddModelComponent
+    AddModelComponent,
+    AddGuitarComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,10 @@ import { AuthService } from './auth/auth.service';
     FlexLayoutModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    GuitarService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
