@@ -11,7 +11,7 @@ import { Make } from '../makes/make.model';
   styleUrls: ['./models.component.css']
 })
 export class ModelsComponent implements OnInit {
-  displayedColumns: string[] = ['modelID', 'value', 'make', 'addDate', 'delete'];
+  displayedColumns: string[] = ['modelID', 'value', 'addDate', 'delete'];
   dataSource: MatTableDataSource<Model>;
   models: Model[] = [];
 

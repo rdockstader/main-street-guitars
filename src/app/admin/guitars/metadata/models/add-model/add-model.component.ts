@@ -10,16 +10,11 @@ import { ModelsService } from '../models.service';
   styleUrls: ['./add-model.component.css']
 })
 export class AddModelComponent implements OnInit {
-  makes: Make[] = [];
   modelForm: FormGroup;
 
   constructor(private modelsService: ModelsService, private makesService: MakesService) { }
 
   ngOnInit() {
-    this.makesService.makesChanged.subscribe(() => {
-      this.makes = this.makesService.getMakes();
-    });
-    this.makes = this.makesService.getMakes();
     this.initForm();
   }
 
@@ -31,7 +26,7 @@ export class AddModelComponent implements OnInit {
   }
 
   onSubmit() {
-    this.modelsService.AddModel(this.modelForm.value.model, this.modelForm.value.make);
+    this.modelsService.AddModel(this.modelForm.value.model);
     this.modelForm.reset();
   }
 

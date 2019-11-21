@@ -18,7 +18,6 @@ import { GuitarsFiltersComponent } from './guitars/guitars-filters/guitars-filte
 import { HomeHeaderComponent } from './home/home-header/home-header.component';
 import { HomeFeaturedComponent } from './home/home-featured/home-featured.component';
 import { HomeFeaturedCardComponent } from './home/home-featured/home-featured-card/home-featured-card.component';
-import { GuitarsHeaderComponent } from './guitars/guitars-header/guitars-header.component';
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuitarsComponent } from './admin/guitars/guitars.component';
 import { MetadataComponent } from './admin/guitars/metadata/metadata.component';
@@ -45,7 +44,6 @@ import { AddGuitarComponent } from './admin/guitars/add-guitar/add-guitar.compon
     HomeHeaderComponent,
     HomeFeaturedComponent,
     HomeFeaturedCardComponent,
-    GuitarsHeaderComponent,
     AdminComponent,
     AdminGuitarsComponent,
     MetadataComponent,

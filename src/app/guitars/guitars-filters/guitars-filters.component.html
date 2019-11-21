@@ -1,35 +1,28 @@
 <div fxLayout="column">
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Make
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div fxLayout="row">
-        <div fxLayout="column">
-            <mat-checkbox>Fender</mat-checkbox>
-            <mat-checkbox>Gibson</mat-checkbox>
-            <mat-checkbox>Taylor</mat-checkbox>
-            <mat-checkbox>Martin</mat-checkbox>
-        </div>
-      </div>
-    </mat-expansion-panel>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Model
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div fxLayout="row">
-          <div fxLayout="column">
-              <mat-checkbox>Stratocaster</mat-checkbox>
-              <mat-checkbox>Telecaster</mat-checkbox>
-              <mat-checkbox>Les Paul</mat-checkbox>
-              <mat-checkbox>SG</mat-checkbox>
-          </div>
-        </div>
-    </mat-expansion-panel>
-  </mat-accordion>
-  <button mat-raised-button color="primary">Apply</button>
+    <form (ngSubmit)="onSubmit()" [formGroup]="guitarFilterForm" >
+        <mat-form-field>
+          <mat-label>Make</mat-label>
+          <mat-select formControlName="makes"  multiple>
+            <mat-option *ngFor="let make of makes" [value]="make.value">
+              {{make.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+            <mat-select formControlName="models" multiple>
+            <mat-option *ngFor="let model of models" [value]="model.value">
+              {{model.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="lowestPrice" placeholder="Lowest Price" type="number">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="highestPrice" placeholder="Highest Price" type="number">
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary">Apply</button>
+        <button type="button" (click)="onReset()" mat-raised-button color="accent">Reset</button>
+      </form>
 </div>
