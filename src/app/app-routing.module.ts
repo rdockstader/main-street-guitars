@@ -1,10 +1,10 @@
+import { AddGuitarComponent } from './admin/guitars/add-guitar/add-guitar.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
 import { HomeComponent } from './home/home.component';
 import { AdminGuitarsComponent } from './admin/guitars/guitars.component';
-import { UsersComponent } from './admin/users/users.component';
 import { AdminComponent } from './admin/admin.component';
 import { MetadataComponent } from './admin/guitars/metadata/metadata.component';
 import { LoginComponent } from './auth/login/login.component';
@@ -27,7 +27,8 @@ const routes: Routes = [
     children: [
     {path: 'guitars', component: AdminGuitarsComponent},
     {path: 'guitars/metadata', component: MetadataComponent},
-    {path: 'users', component: UsersComponent}
+    {path: 'guitars/add', component: AddGuitarComponent},
+    {path: 'guitars/edit/:id', component: AddGuitarComponent}
   ]}
 ];
 

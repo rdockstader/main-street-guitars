@@ -1,1 +1,42 @@
-<p>add-guitar works!</p>
+<section fxLayout fxLayoutAlign="center">
+  <form (ngSubmit)="onSubmit()" [formGroup]="addGuitarForm" >
+    <mat-card fxFlex.xs="100%" fxFlex="600px">
+        <mat-card-title fxLayoutAlign="center">Add Guitar</mat-card-title>
+        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+        <mat-form-field>
+          <mat-label>Make</mat-label>
+          <mat-select formControlName="make">
+            <mat-option *ngFor="let make of makes" [value]="make.value">
+              {{make.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+            <mat-select formControlName="model">
+            <mat-option *ngFor="let model of models" [value]="model.value">
+              {{model.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="subModel" placeholder="Sub Model" type="text">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="color" placeholder="Color" type="text">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="imageUrl" placeholder="Image URL" type="url">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="price" placeholder="Price" type="number">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput formControlName="description" placeholder="Description">
+            </textarea>
+          </mat-form-field>
+        <button type="submit" mat-raised-button color="primary" [disabled]="!addGuitarForm.valid">Save</button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</section>

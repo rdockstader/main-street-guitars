@@ -22,7 +22,6 @@ import { GuitarsHeaderComponent } from './guitars/guitars-header/guitars-header.
 import { AdminComponent } from './admin/admin.component';
 import { AdminGuitarsComponent } from './admin/guitars/guitars.component';
 import { MetadataComponent } from './admin/guitars/metadata/metadata.component';
-import { UsersComponent } from './admin/users/users.component';
 import { ModelsComponent } from './admin/guitars/metadata/models/models.component';
 import { MakesComponent } from './admin/guitars/metadata/makes/makes.component';
 import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-make.component';
@@ -50,7 +49,6 @@ import { AddGuitarComponent } from './admin/guitars/add-guitar/add-guitar.compon
     AdminComponent,
     AdminGuitarsComponent,
     MetadataComponent,
-    UsersComponent,
     ModelsComponent,
     MakesComponent,
     AddMakeComponent,

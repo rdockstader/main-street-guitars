@@ -41,10 +41,6 @@ export class AdminGuitarsComponent implements OnInit {
     }
   }
 
-  onEdit(id: string) {
-    console.log(id);
-  }
-
   onDelete(id: string) {
     this.guitarService.removeGuitar(id);
   }

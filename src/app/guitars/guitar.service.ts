@@ -25,6 +25,7 @@ export class GuitarService {
 
   addGuitar(guitar: Guitar) {
     guitar.id = Math.round(Math.random() * 1000).toString();
+    guitar.addDate = new Date();
     this.guitars.push(guitar);
     this.guitarsChanged.next();
     this.snackBar.open('Guitar created',  null, {
@@ -33,8 +34,8 @@ export class GuitarService {
   }
 
   updateguitar(guitar: Guitar) {
-    const index = this.guitars.findIndex(g => g.id = guitar.id);
-    if (!index || index < 0) {
+    const index = this.guitars.findIndex(g => g.id === guitar.id);
+    if (index < 0) {
       this.snackBar.open('Guitar ID not found',  null, {
         duration: 3000
       });
