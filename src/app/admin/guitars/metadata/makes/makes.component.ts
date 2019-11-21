@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { MakesService } from './makes.service';
 import { Make } from './make.model';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -10,10 +11,12 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['makes.component.css'],
   templateUrl: 'makes.component.html',
 })
-export class MakesComponent implements OnInit {
+export class MakesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['makeID', 'value', 'addDate', 'delete'];
   dataSource: MatTableDataSource<Make>;
   makes: Make[] = [];
+
+  makesSubscription: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -28,7 +31,7 @@ export class MakesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.makesService.makesChanged.subscribe(() => {
+    this.makesSubscription = this.makesService.makesChanged.subscribe(() => {
       this.getMakes();
     });
     this.getMakes();
@@ -44,5 +47,11 @@ export class MakesComponent implements OnInit {
 
   onDelete(makeID: number) {
     this.makesService.RemoveMake(makeID);
+  }
+
+  ngOnDestroy() {
+    if (this.makesSubscription) {
+      this.makesSubscription.unsubscribe();
+    }
   }
 }

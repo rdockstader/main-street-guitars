@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { GuitarService } from './../../../home/guitars/guitar.service';
@@ -15,7 +16,7 @@ import { Make } from './../metadata/makes/make.model';
   templateUrl: './add-guitar.component.html',
   styleUrls: ['./add-guitar.component.css']
 })
-export class AddGuitarComponent implements OnInit {
+export class AddGuitarComponent implements OnInit, OnDestroy {
   addGuitarForm: FormGroup;
   makes: Make[] = [];
   models: Model[] = [];
@@ -24,13 +25,15 @@ export class AddGuitarComponent implements OnInit {
   ID_PARAM = 'id';
   editMode = false;
 
+  routeSubscription: Subscription;
+
   constructor(private makesService: MakesService,
               private modelsService: ModelsService,
               private guitarSerice: GuitarService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
+    this.routeSubscription = this.route.params.subscribe(
       (parentParams: Params) => {
         this.id = parentParams[this.ID_PARAM];
         if (this.id) {
@@ -84,6 +87,12 @@ export class AddGuitarComponent implements OnInit {
       this.addGuitarForm.reset();
     } else {
       this.guitarSerice.updateguitar(guitar);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
     }
   }
 

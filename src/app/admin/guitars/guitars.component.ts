@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { Guitar } from './../../home/guitars/guitar.model';
 import { GuitarService } from './../../home/guitars/guitar.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
@@ -8,11 +9,13 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
   templateUrl: './guitars.component.html',
   styleUrls: ['./guitars.component.css']
 })
-export class AdminGuitarsComponent implements OnInit {
+export class AdminGuitarsComponent implements OnInit, OnDestroy {
   showAddGuitar = false;
   guitars: Guitar[] = [];
   displayedColumns: string[] = ['id', 'make', 'model', 'subModel', 'price', 'addDate', 'edit', 'delete'];
   dataSource: MatTableDataSource<Guitar>;
+
+  guitarSubscription: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -20,7 +23,7 @@ export class AdminGuitarsComponent implements OnInit {
   constructor(private guitarService: GuitarService) { }
 
   ngOnInit() {
-    this.guitarService.guitarsChanged.subscribe(() => {
+    this.guitarSubscription = this.guitarService.guitarsChanged.subscribe(() => {
       this.getGuitars();
     });
     this.getGuitars();
@@ -47,6 +50,10 @@ export class AdminGuitarsComponent implements OnInit {
 
   toggleAddGuitar() {
     this.showAddGuitar = (this.showAddGuitar) ? false : true;
+  }
+
+  ngOnDestroy() {
+    this.guitarSubscription.unsubscribe();
   }
 
 }

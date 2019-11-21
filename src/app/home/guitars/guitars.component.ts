@@ -16,7 +16,7 @@ export class GuitarsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.guitars = this.guitarService.getGuitars();
-    this.guitarService.guitarsChanged.subscribe(() => {
+    this.guitarsChangedSub = this.guitarService.guitarsChanged.subscribe(() => {
       this.guitars = this.guitarService.getGuitars();
     });
   }

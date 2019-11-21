@@ -21,12 +21,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    if (this.authChangeSub) {
-      this.authChangeSub.unsubscribe();
-    }
-  }
-
   onToggleSidenav() {
     this.toggleSidenav.emit();
   }
@@ -37,6 +31,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    if (this.authChangeSub) {
+      this.authChangeSub.unsubscribe();
+    }
   }
 
 }

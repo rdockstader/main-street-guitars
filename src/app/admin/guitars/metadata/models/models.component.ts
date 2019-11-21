@@ -1,7 +1,8 @@
+import { Subscription } from 'rxjs';
 import { MakesService } from './../makes/makes.service';
 import { ModelsService } from './models.service';
 import { Model } from './model.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Make } from '../makes/make.model';
 
@@ -10,10 +11,12 @@ import { Make } from '../makes/make.model';
   templateUrl: './models.component.html',
   styleUrls: ['./models.component.css']
 })
-export class ModelsComponent implements OnInit {
+export class ModelsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['modelID', 'value', 'addDate', 'delete'];
   dataSource: MatTableDataSource<Model>;
   models: Model[] = [];
+
+  modelSubscription: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -29,7 +32,7 @@ export class ModelsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.modelsService.modelsChanged.subscribe(() => {
+    this.modelSubscription = this.modelsService.modelsChanged.subscribe(() => {
       this.getModels();
     });
     this.getModels();
@@ -45,5 +48,11 @@ export class ModelsComponent implements OnInit {
 
   onDelete(modelID: number) {
     this.modelsService.RemoveModel(modelID);
+  }
+
+  ngOnDestroy() {
+    if (this.modelSubscription) {
+      this.modelSubscription.unsubscribe();
+    }
   }
 }

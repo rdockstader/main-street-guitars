@@ -17,6 +17,7 @@ export class GuitarsFiltersComponent implements OnInit, OnDestroy {
   guitarFilterForm: FormGroup;
   makes: Make[] = [];
   models: Model[] = [];
+
   makesSub: Subscription;
   modelsSub: Subscription;
 
