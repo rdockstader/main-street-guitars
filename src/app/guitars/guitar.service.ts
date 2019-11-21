@@ -1,9 +1,9 @@
-import { GuitarFilter } from './guitarFilter.model';
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
 import { Subject } from 'rxjs';
 
 import { Guitar } from './guitar.model';
+import { UIService } from './../shared/ui.service';
+import { GuitarFilter } from './guitarFilter.model';
 
 @Injectable()
 export class GuitarService {
@@ -76,7 +76,7 @@ export class GuitarService {
   filteredGuitars: Guitar[] = [];
   public guitarsChanged = new Subject<void>();
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private uiService: UIService) {}
 
   getGuitars() {
     if (this.filteredGuitars.length > 0 ) {
@@ -98,23 +98,17 @@ export class GuitarService {
     guitar.addDate = new Date();
     this.guitars.push(guitar);
     this.guitarsChanged.next();
-    this.snackBar.open('Guitar created',  null, {
-      duration: 3000
-    });
+    this.uiService.showSnackbar('Guitar created');
   }
 
   updateguitar(guitar: Guitar) {
     const index = this.guitars.findIndex(g => g.id === guitar.id);
     if (index < 0) {
-      this.snackBar.open('Guitar ID not found',  null, {
-        duration: 3000
-      });
+      this.uiService.showSnackbar('Guitar ID not found');
     } else {
       this.guitars[index] = guitar;
       this.guitarsChanged.next();
-      this.snackBar.open('Guitar Updated',  null, {
-        duration: 3000
-      });
+      this.uiService.showSnackbar('Guitar Updated');
     }
   }
 
@@ -123,13 +117,10 @@ export class GuitarService {
    if (index >= 0) {
      this.guitars.splice(index, 1);
      this.guitarsChanged.next();
-     this.snackBar.open('Guitar removed',  null, {
-      duration: 3000
-    });
+     this.uiService.showSnackbar('Guitar Removed');
+
    } else {
-    this.snackBar.open('Guitar not found',  null, {
-      duration: 3000
-    });
+    this.uiService.showSnackbar('Guitar not found');
    }
   }
 
@@ -151,9 +142,7 @@ export class GuitarService {
       if (this.filteredGuitars.length > 0) {
         this.guitarsChanged.next();
       } else {
-        this.snackBar.open('No guitars in Filter.',  null, {
-          duration: 3000
-        });
+        this.uiService.showSnackbar('No guitars in Filter.');
       }
     } else {
       this.filteredGuitars = [];

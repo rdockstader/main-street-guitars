@@ -1,3 +1,4 @@
+import { UIService } from './../shared/ui.service';
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,7 +14,8 @@ export class AuthService {
   authChange = new Subject<boolean>();
   private user: User;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private uiService: UIService) {}
 
   registerUser(authData: AuthData) {
     if (authData.email === 'admin@msg.com') {
@@ -30,9 +32,11 @@ export class AuthService {
       };
     }
     this.authSuccessful();
+    this.uiService.loadingStateChanged.next(false);
   }
 
   login(authData: AuthData) {
+    this.uiService.loadingStateChanged.next(true);
     // TODO: replace with actual login
     this.registerUser(authData);
 
@@ -57,6 +61,7 @@ export class AuthService {
   }
 
   private authSuccessful() {
+    this.uiService.showSnackbar('Login Successful');
     this.authChange.next(true);
     this.router.navigate(['/']);
   }

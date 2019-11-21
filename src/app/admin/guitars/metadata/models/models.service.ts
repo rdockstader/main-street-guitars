@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
 
 import { Model } from './model.model';
+import { UIService } from './../../../../shared/ui.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ModelsService {
     new Model(4, 'Telecaster', new Date('11/14/2019')),
   ];
   private nextModelID = 5;
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private uiService: UIService) {
   }
 
   getModels() {
@@ -28,9 +28,7 @@ export class ModelsService {
 
     this.models.push(new Model(newModelID, value, new Date()));
     this.modelsChanged.next();
-    this.snackBar.open('Model Added!', null, {
-      duration: 3000
-    });
+    this.uiService.showSnackbar('Model Added!');
   }
 
   RemoveModel(ModelID: number) {
@@ -38,13 +36,9 @@ export class ModelsService {
     if (index >= 0) {
       this.models.splice(index, 1);
       this.modelsChanged.next();
-      this.snackBar.open('Make Removed!',  null, {
-        duration: 3000
-      });
+      this.uiService.showSnackbar('Make Removed!');
     } else {
-      this.snackBar.open('Invalid MakeID: ' + ModelID, null, {
-        duration: 3000
-      });
+      this.uiService.showSnackbar('Invalid MakeID: ' + ModelID);
     }
   }
 }

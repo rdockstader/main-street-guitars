@@ -1,3 +1,4 @@
+import { UIService } from './ui.service';
 import { MaterialModule } from './../material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,6 +15,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule
+  ],
+  providers: [
+    UIService
   ]
 })
 export class SharedModule {}
