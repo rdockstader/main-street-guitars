@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Guitar } from './guitar.model';
-import { UIService } from './../shared/ui.service';
+import { UIService } from './../../shared/ui.service';
 import { GuitarFilter } from './guitarFilter.model';
 
 @Injectable()

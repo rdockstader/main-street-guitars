@@ -9,12 +9,12 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
-import { GuitarsComponent } from './guitars/guitars.component';
-import { GuitarDetailsComponent } from './guitars/guitar-details/guitar-details.component';
+import { GuitarsComponent } from './home/guitars/guitars.component';
+import { GuitarDetailsComponent } from './home/guitars/guitar-details/guitar-details.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { HomeComponent } from './home/home.component';
-import { GuitarsFiltersComponent } from './guitars/guitars-filters/guitars-filters.component';
+import { GuitarsFiltersComponent } from './home/guitars/guitars-filters/guitars-filters.component';
 import { HomeHeaderComponent } from './home/home-header/home-header.component';
 import { HomeFeaturedComponent } from './home/home-featured/home-featured.component';
 import { HomeFeaturedCardComponent } from './home/home-featured/home-featured-card/home-featured-card.component';
@@ -27,7 +27,7 @@ import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-ma
 import { AddModelComponent } from './admin/guitars/metadata/models/add-model/add-model.component';
 
 import { AuthService } from './auth/auth.service';
-import { GuitarService } from './guitars/guitar.service';
+import { GuitarService } from './home/guitars/guitar.service';
 import { AddGuitarComponent } from './admin/guitars/add-guitar/add-guitar.component';
 
 @NgModule({

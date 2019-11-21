@@ -1,9 +1,9 @@
 import { GuitarService } from './../guitar.service';
 import { GuitarFilter } from './../guitarFilter.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Make } from './../../admin/guitars/metadata/makes/make.model';
-import { ModelsService } from './../../admin/guitars/metadata/models/models.service';
-import { MakesService } from './../../admin/guitars/metadata/makes/makes.service';
+import { Make } from './../../../admin/guitars/metadata/makes/make.model';
+import { ModelsService } from './../../../admin/guitars/metadata/models/models.service';
+import { MakesService } from './../../../admin/guitars/metadata/makes/makes.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Model } from 'src/app/admin/guitars/metadata/models/model.model';
 import { Subscription } from 'rxjs';

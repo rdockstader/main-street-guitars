@@ -2,8 +2,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { GuitarService } from './../../../guitars/guitar.service';
-import { Guitar } from './../../../guitars/guitar.model';
+import { GuitarService } from './../../../home/guitars/guitar.service';
+import { Guitar } from './../../../home/guitars/guitar.model';
 import { ModelsService } from './../metadata/models/models.service';
 import { MakesService } from './../metadata/makes/makes.service';
 import { Model } from './../metadata/models/model.model';

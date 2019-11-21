@@ -1,5 +1,5 @@
-import { Guitar } from './../../guitars/guitar.model';
-import { GuitarService } from './../../guitars/guitar.service';
+import { Guitar } from './../../home/guitars/guitar.model';
+import { GuitarService } from './../../home/guitars/guitar.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
