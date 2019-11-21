@@ -1,65 +1,36 @@
-import { FormsModule } from '@angular/forms';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {FlexLayoutModule} from '@angular/flex-layout';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
-import { GuitarsComponent } from './home/guitars/guitars.component';
-import { GuitarDetailsComponent } from './home/guitars/guitar-details/guitar-details.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { HomeComponent } from './home/home.component';
-import { GuitarsFiltersComponent } from './home/guitars/guitars-filters/guitars-filters.component';
-import { HomeHeaderComponent } from './home/home-header/home-header.component';
-import { HomeFeaturedComponent } from './home/home-featured/home-featured.component';
-import { HomeFeaturedCardComponent } from './home/home-featured/home-featured-card/home-featured-card.component';
-import { AdminComponent } from './admin/admin.component';
-import { AdminGuitarsComponent } from './admin/guitars/guitars.component';
-import { MetadataComponent } from './admin/guitars/metadata/metadata.component';
-import { ModelsComponent } from './admin/guitars/metadata/models/models.component';
-import { MakesComponent } from './admin/guitars/metadata/makes/makes.component';
-import { AddMakeComponent } from './admin/guitars/metadata/makes/add-make/add-make.component';
-import { AddModelComponent } from './admin/guitars/metadata/models/add-model/add-model.component';
+
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module';
+import { HomeModule } from './home/home.module';
+import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
 
 import { AuthService } from './auth/auth.service';
 import { GuitarService } from './home/guitars/guitar.service';
-import { AddGuitarComponent } from './admin/guitars/add-guitar/add-guitar.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    LoginComponent,
-    GuitarsComponent,
-    GuitarDetailsComponent,
     HeaderComponent,
-    SidenavListComponent,
-    HomeComponent,
-    GuitarsFiltersComponent,
-    HomeHeaderComponent,
-    HomeFeaturedComponent,
-    HomeFeaturedCardComponent,
-    AdminComponent,
-    AdminGuitarsComponent,
-    MetadataComponent,
-    ModelsComponent,
-    MakesComponent,
-    AddMakeComponent,
-    AddModelComponent,
-    AddGuitarComponent
+    SidenavListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    FlexLayoutModule,
-    FormsModule
+    AuthModule,
+    AdminModule,
+    HomeModule
   ],
   providers: [
     AuthService,
