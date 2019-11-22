@@ -9,6 +9,10 @@ import { ModelsService } from './../metadata/models/models.service';
 import { MakesService } from './../metadata/makes/makes.service';
 import { Model } from './../metadata/models/model.model';
 import { Make } from './../metadata/makes/make.model';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from '../../../app.reducer';
+import * as Ui from '../../../shared/ui.actions';
 
 
 @Component({
@@ -30,15 +34,23 @@ export class AddGuitarComponent implements OnInit, OnDestroy {
   constructor(private makesService: MakesService,
               private modelsService: ModelsService,
               private guitarSerice: GuitarService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
+    this.store.dispatch(new Ui.StartLoading());
     this.routeSubscription = this.route.params.subscribe(
       (parentParams: Params) => {
         this.id = parentParams[this.ID_PARAM];
         if (this.id) {
-          this.guitar = this.guitarSerice.getGuitar(this.id);
-          this.editMode = true;
+          this.store.select(fromRoot.getGuitars).subscribe(guitars => {
+            this.guitar = guitars.find(g => g.id === this.id);
+            this.editMode = true;
+            this.store.dispatch(new Ui.StopLoading());
+            this.initForm();
+          });
+        } else {
+          this.store.dispatch(new Ui.StopLoading());
         }
       }
     );

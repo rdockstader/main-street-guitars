@@ -1,39 +1,40 @@
-import { Subscription } from 'rxjs';
 import { Guitar } from './../../home/guitars/guitar.model';
 import { GuitarService } from './../../home/guitars/guitar.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-admin-guitars',
   templateUrl: './guitars.component.html',
   styleUrls: ['./guitars.component.css']
 })
-export class AdminGuitarsComponent implements OnInit, OnDestroy {
-  showAddGuitar = false;
-  guitars: Guitar[] = [];
+export class AdminGuitarsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'make', 'model', 'subModel', 'price', 'addDate', 'edit', 'delete'];
   dataSource: MatTableDataSource<Guitar>;
-
-  guitarSubscription: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private guitarService: GuitarService) { }
+  constructor(private guitarService: GuitarService,
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.guitarSubscription = this.guitarService.guitarsChanged.subscribe(() => {
-      this.getGuitars();
-    });
-    this.getGuitars();
+    this.buildDatasource();
   }
 
-  getGuitars() {
-    this.guitars = this.guitarService.getGuitars();
-    this.dataSource = new MatTableDataSource(this.guitars);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  buildDatasource() {
+    this.store.select(fromRoot.getGuitars).subscribe(guitars => {
+      if (this.dataSource) {
+        this.dataSource.data = guitars;
+      } else {
+        this.dataSource = new MatTableDataSource(guitars);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    });
   }
 
   applyFilter(filterValue: string) {
@@ -46,14 +47,7 @@ export class AdminGuitarsComponent implements OnInit, OnDestroy {
 
   onDelete(id: string) {
     this.guitarService.removeGuitar(id);
-  }
-
-  toggleAddGuitar() {
-    this.showAddGuitar = (this.showAddGuitar) ? false : true;
-  }
-
-  ngOnDestroy() {
-    this.guitarSubscription.unsubscribe();
+    this.buildDatasource();
   }
 
 }

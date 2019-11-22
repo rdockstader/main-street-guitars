@@ -1,30 +1,23 @@
 import { Guitar } from './guitar.model';
 import { GuitarService } from './guitar.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-guitars',
   templateUrl: './guitars.component.html',
   styleUrls: ['./guitars.component.css']
 })
-export class GuitarsComponent implements OnInit, OnDestroy {
-  guitars: Guitar[] = [];
-  guitarsChangedSub: Subscription;
+export class GuitarsComponent implements OnInit {
+  guitars$: Observable<Guitar[]>;
 
-  constructor(private guitarService: GuitarService) { }
+  constructor(private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.guitars = this.guitarService.getGuitars();
-    this.guitarsChangedSub = this.guitarService.guitarsChanged.subscribe(() => {
-      this.guitars = this.guitarService.getGuitars();
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.guitarsChangedSub) {
-      this.guitarsChangedSub.unsubscribe();
-    }
+    this.guitars$ = this.store.select(fromRoot.getFilteredGuitars);
   }
 
 }

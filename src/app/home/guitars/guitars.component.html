@@ -1,12 +1,12 @@
 <section>
     <div fxLayout="row wrap" fxLayoutGap="10px">
-      <mat-card class="span-1-of-3" *ngFor="let guitar of guitars">
+      <mat-card class="span-1-of-3" *ngFor="let guitar of guitars$ | async">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
           <mat-card-title>{{guitar.make}} {{guitar.model}}</mat-card-title>
           <mat-card-subtitle>{{guitar.subModel}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image [src]="guitar.imageUrl" alt="Photo of a Shiba Inu">
+        <img mat-card-image [src]="guitar.imageUrl" [alt]="guitar.make">
         <mat-card-content>
           <p>
               {{guitar.description}}
