@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 
 import { AuthData } from './auth-data.model';
 import { User } from './user.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Store } from '@ngrx/store';
+import * as fromRoot from '../app.reducer';
+import * as UI from '../shared/ui.actions';
 
 
 
@@ -15,7 +17,8 @@ export class AuthService {
   private user: User;
 
   constructor(private router: Router,
-              private uiService: UIService) {}
+              private uiService: UIService,
+              private store: Store<fromRoot.State>) {}
 
   registerUser(authData: AuthData) {
     if (authData.email === 'admin@msg.com') {
@@ -32,11 +35,11 @@ export class AuthService {
       };
     }
     this.authSuccessful();
-    this.uiService.loadingStateChanged.next(false);
+    this.store.dispatch(new UI.StopLoading());
   }
 
   login(authData: AuthData) {
-    this.uiService.loadingStateChanged.next(true);
+    this.store.dispatch(new UI.StartLoading());
     // TODO: replace with actual login
     this.registerUser(authData);
 
