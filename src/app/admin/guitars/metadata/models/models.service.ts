@@ -32,7 +32,7 @@ export class ModelsService {
   }
 
   RemoveModel(ModelID: number) {
-    const index = this.models.findIndex(model => model.modelID === this.nextModelID);
+    const index = this.models.findIndex(model => model.modelID === ModelID);
     if (index >= 0) {
       this.models.splice(index, 1);
       this.modelsChanged.next();

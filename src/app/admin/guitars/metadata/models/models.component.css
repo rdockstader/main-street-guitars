@@ -16,6 +16,5 @@ td, th {
 }
 
 .delete {
-  color: red;
   cursor: pointer;
 }

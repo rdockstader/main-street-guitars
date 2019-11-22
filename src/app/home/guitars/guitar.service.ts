@@ -20,7 +20,8 @@ export class GuitarService {
                    ' weight relief make the Gibson Les Paul Studio Tribute a pleasure to play. A mahogany body,' +
                    ' maple top and pair of 490 R & T humbucking pickups with Alnico II magnets provide classic' +
                    'tone, power and sustain.',
-      price: 1200.00
+      price: 1200.00,
+      addDate: new Date()
     },
     {
       id: '2',
@@ -39,7 +40,8 @@ export class GuitarService {
                    ' allows you to switch between the Gibson humbucker and the single coil P90 sounds, both of which' +
                    ' have defined so many genres of music across multiple generations since we invented them. Upscale ' +
                    'appointments include genuine mother of pearl inlays, Grover locking Rotomatic tuners, and clear top hat knobs.',
-      price: 1999.99
+      price: 1999.99,
+      addDate: new Date()
     },
     {
       id: '3',
@@ -54,7 +56,8 @@ export class GuitarService {
                    ' packed with authentic Fender feel and style. It’s ready to serve your musical' +
                    'vision, it’s versatile enough to handle any style of music and it’s the perfect' +
                    ' platform for creating your own sound.',
-      price: 674.99
+      price: 674.99,
+      addDate: new Date()
     },
     {
       id: '3',
@@ -70,7 +73,8 @@ export class GuitarService {
                    'Custom body with a single Seymour DuncanTM P-90 pickup, an Ebony fingerboard ' +
                    'with traditional block inlays, GroverTM Rotomatic tuners, and EpiLiteTM case ' +
                    'along with a signed Certificate of Authenticity.',
-      price: 699.99
+      price: 699.99,
+      addDate: new Date()
     }
   ];
   filteredGuitars: Guitar[] = [];

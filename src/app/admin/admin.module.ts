@@ -1,3 +1,4 @@
+import { AdminRoutingModule } from './admin-routing.module';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
@@ -23,7 +24,8 @@ import { AddGuitarComponent } from './guitars/add-guitar/add-guitar.component';
     AddGuitarComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    AdminRoutingModule
   ],
   exports: []
 })

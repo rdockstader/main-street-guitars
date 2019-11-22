@@ -5,3 +5,7 @@
 .add-guitar {
   width: 100px;
 }
+
+.delete {
+  cursor: pointer;
+}

@@ -22,7 +22,10 @@
         <mat-form-field>
           <input matInput formControlName="highestPrice" placeholder="Highest Price" type="number">
         </mat-form-field>
-        <button type="submit" mat-raised-button color="primary">Apply</button>
-        <button type="button" (click)="onReset()" mat-raised-button color="accent">Reset</button>
+        <div fxLayout fxLayoutGap="5px">
+          <button type="submit" mat-raised-button color="primary">Apply</button>
+          <button type="button" (click)="onReset()" mat-raised-button color="accent">Reset</button>
+        </div>
+
       </form>
 </div>
