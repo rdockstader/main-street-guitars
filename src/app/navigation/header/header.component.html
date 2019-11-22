@@ -7,16 +7,16 @@
   <div><a [routerLink]="['/']">Main Street Guitars</a></div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-      <li *ngIf="getIsAdmin()">
+      <li *ngIf="isAdmin$ | async">
         <a [routerLink]="['/admin']">Site Admin</a>
       </li>
-      <li *ngIf="!isAuth">
+      <li *ngIf="!(isAuth$ | async)">
         <a [routerLink]="['/signup']" >Sign up</a>
       </li>
-      <li *ngIf="!isAuth">
+      <li *ngIf="!(isAuth$ | async)">
         <a [routerLink]="['/login']" >Login</a>
       </li>
-      <li *ngIf="isAuth">
+      <li *ngIf="(isAuth$ | async)">
         <a (click)="onLogout()">Logout</a>
       </li>
     </ul>

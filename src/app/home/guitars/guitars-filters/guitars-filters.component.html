@@ -1,5 +1,5 @@
-<div fxLayout="column">
-    <form (ngSubmit)="onSubmit()" [formGroup]="guitarFilterForm" >
+<div fxLayout="row" fxLayoutAlign="center center">
+    <form fxLayout="column" fxLayoutAlign="center center" (ngSubmit)="onSubmit()" [formGroup]="guitarFilterForm" >
         <mat-form-field>
           <mat-label>Make</mat-label>
           <mat-select formControlName="makes"  multiple>
@@ -23,8 +23,8 @@
           <input matInput formControlName="highestPrice" placeholder="Highest Price" type="number">
         </mat-form-field>
         <div fxLayout fxLayoutGap="5px">
-          <button type="submit" mat-raised-button color="primary">Apply</button>
           <button type="button" (click)="onReset()" mat-raised-button color="accent">Reset</button>
+          <button type="submit" mat-raised-button color="primary">Apply</button>
         </div>
 
       </form>

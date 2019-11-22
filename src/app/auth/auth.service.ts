@@ -1,5 +1,4 @@
 import { UIService } from './../shared/ui.service';
-import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,12 +7,12 @@ import { User } from './user.model';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
+import * as Auth from './auth.actions';
 
 
 
 @Injectable()
 export class AuthService {
-  authChange = new Subject<boolean>();
   private user: User;
 
   constructor(private router: Router,
@@ -47,7 +46,8 @@ export class AuthService {
 
   logout() {
     this.user = null;
-    this.authChange.next(false);
+    this.store.dispatch(new Auth.SetUnauthenticated());
+    this.store.dispatch(new Auth.SetNotAdmin());
     this.router.navigate(['/login']);
   }
 
@@ -55,17 +55,14 @@ export class AuthService {
     return {...this.user};
   }
 
-  isAuth(): boolean {
-    return this.user != null;
-  }
-
-  isAdmin(): boolean {
-    return (this.user && this.user.userType === 'admin');
-  }
-
   private authSuccessful() {
     this.uiService.showSnackbar('Login Successful');
-    this.authChange.next(true);
+    this.store.dispatch(new Auth.SetAuthenticated());
+    if (this.user.userType === 'admin') {
+      this.store.dispatch(new Auth.SetIsAdmin());
+    } else {
+      this.store.dispatch(new Auth.SetNotAdmin());
+    }
     this.router.navigate(['/']);
   }
 }
