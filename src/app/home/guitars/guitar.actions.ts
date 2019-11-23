@@ -16,7 +16,4 @@ export class SetFilteredGuitars implements Action {
   constructor(public payload: Guitar[]) {}
 }
 
-
-
-
 export type GuitarActions = SetGuitars | SetFilteredGuitars;

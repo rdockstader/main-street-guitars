@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -22,8 +22,8 @@ import * as Ui from '../../../shared/ui.actions';
 })
 export class AddGuitarComponent implements OnInit, OnDestroy {
   addGuitarForm: FormGroup;
-  makes: Make[] = [];
-  models: Model[] = [];
+  makes$: Observable<Make[]>;
+  models$: Observable<Model[]>;
   id: string;
   guitar: Guitar;
   ID_PARAM = 'id';
@@ -31,9 +31,7 @@ export class AddGuitarComponent implements OnInit, OnDestroy {
 
   routeSubscription: Subscription;
 
-  constructor(private makesService: MakesService,
-              private modelsService: ModelsService,
-              private guitarSerice: GuitarService,
+  constructor(private guitarSerice: GuitarService,
               private route: ActivatedRoute,
               private store: Store<fromRoot.State>) { }
 
@@ -54,8 +52,8 @@ export class AddGuitarComponent implements OnInit, OnDestroy {
         }
       }
     );
-    this.makes = this.makesService.getMakes();
-    this.models = this.modelsService.getModels();
+    this.makes$ = this.store.select(fromRoot.getMakes);
+    this.models$ = this.store.select(fromRoot.getModels);
     this.initForm();
 
   }

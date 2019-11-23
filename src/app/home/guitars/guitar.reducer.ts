@@ -1,4 +1,3 @@
-import { GuitarFilter } from './guitarFilter.model';
 import { Guitar } from './guitar.model';
 import {
   GuitarActions,
@@ -44,6 +43,22 @@ const dummyData: Guitar[] = [
     addDate: new Date()
   },
   {
+    id: '6',
+    make: 'Taylor',
+    model: 'GS Mini',
+    subModel: 'Ultra',
+    imageUrl: 'https://www.taylorguitars.com/sites/default/files/responsive-guitar-detail/Taylor-GSMini-fr-2019.png',
+    color: 'Natural',
+    description: 'A marvel of scaled-down design, the GS Mini is a fun little acoustic cannon' +
+    ' that has taken the world by storm. Sporting a rich, full voice that belies its compact size, ' +
+    'the Mini is ultra-portable, yet just as comfortable to cradle in the comfort of your home, ' +
+    'making it the ultimate modern-day parlor guitar. Featuring the patented Taylor neck, ' +
+    'this edition of the Mini features a solid Sitka spruce top. And with the easy-to-add ES-Go™ ' +
+    'pickup, you\'ll have a viable performance tool, too.',
+    price: 499,
+    addDate: new Date()
+  },
+  {
     id: '3',
     make: 'Fender',
     model: 'Straocaster',
@@ -75,8 +90,30 @@ const dummyData: Guitar[] = [
                  'along with a signed Certificate of Authenticity.',
     price: 699.99,
     addDate: new Date()
+  },
+  {
+    id: '5',
+    make: 'Fender',
+    model: 'Telecaster',
+    subModel: 'Ultra',
+    imageUrl: 'https://www.fmicassets.com/Damroot/ZoomJpg/10001/0118032712_gtr_frt_001_rr.jpg',
+    color: 'Ultraburst',
+    description: 'American Ultra is our most advanced series of guitars and basses for discerning' +
+                       ' players who demand the ultimate in precision, performance and tone. The' +
+                       ' American Ultra Telecaster features a unique “Modern D” neck profile with Ultra' +
+                       ' rolled fingerboard edges for hours of playing comfort, and the tapered neck heel' +
+                       ' allows easy access to the highest register. A speedy 10”-14” compound-radius ' +
+                       'fingerboard with 22 medium-jumbo frets means effortless and accurate soloing, ' +
+                       'while the Ultra Noiseless™ Vintage pickups and advanced wiring options provide ' +
+                       'endless tonal possibilities – without hum. The sculpted rear body contours are as' +
+                       ' beautiful as they are functional. This versatile, state-of-the-art instrument will ' +
+                       'inspire you to push your playing to new heights.',
+    price: 1899.99,
+    addDate: new Date()
   }
 ];
+
+
 
 export interface State {
   guitars: Guitar[];

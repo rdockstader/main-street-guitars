@@ -1,39 +1,33 @@
-import { GuitarService } from './../guitar.service';
-import { GuitarFilter } from './../guitarFilter.model';
+import { Store } from '@ngrx/store';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { GuitarService } from './../guitar.service';
+
+import { GuitarFilter } from './../guitarFilter.model';
 import { Make } from './../../../admin/guitars/metadata/makes/make.model';
-import { ModelsService } from './../../../admin/guitars/metadata/models/models.service';
-import { MakesService } from './../../../admin/guitars/metadata/makes/makes.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Model } from 'src/app/admin/guitars/metadata/models/model.model';
-import { Subscription } from 'rxjs';
+
+import * as fromRoot from '../../../app.reducer';
 
 @Component({
   selector: 'app-guitars-filters',
   templateUrl: './guitars-filters.component.html',
   styleUrls: ['./guitars-filters.component.css']
 })
-export class GuitarsFiltersComponent implements OnInit, OnDestroy {
+export class GuitarsFiltersComponent implements OnInit {
   guitarFilterForm: FormGroup;
-  makes: Make[] = [];
-  models: Model[] = [];
+  makes$: Observable<Make[]>;
+  models$: Observable<Model[]>;
 
-  makesSub: Subscription;
-  modelsSub: Subscription;
 
-  constructor(private makesService: MakesService,
-              private modelsService: ModelsService,
-              private guitarService: GuitarService) { }
+  constructor(private guitarService: GuitarService,
+              private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
-    this.models = this.modelsService.getModels();
-    this.modelsSub = this.modelsService.modelsChanged.subscribe(() => {
-      this.models = this.modelsService.getModels();
-    });
-    this.makes = this.makesService.getMakes();
-    this.makesSub = this.makesService.makesChanged.subscribe(() => {
-      this.makes = this.makesService.getMakes();
-    });
+    this.makes$ = this.store.select(fromRoot.getMakes);
+    this.models$ = this.store.select(fromRoot.getModels);
     this.initForm();
   }
 
@@ -56,15 +50,6 @@ export class GuitarsFiltersComponent implements OnInit, OnDestroy {
   onReset() {
     this.guitarFilterForm.reset();
     this.guitarService.filterGuitars(null);
-  }
-
-  ngOnDestroy() {
-    if (this.makesSub) {
-      this.makesSub.unsubscribe();
-    }
-    if (this.modelsSub) {
-      this.modelsSub.unsubscribe();
-    }
   }
 
 }

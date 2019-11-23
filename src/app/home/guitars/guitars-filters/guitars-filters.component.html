@@ -3,7 +3,7 @@
         <mat-form-field>
           <mat-label>Make</mat-label>
           <mat-select formControlName="makes"  multiple>
-            <mat-option *ngFor="let make of makes" [value]="make.value">
+            <mat-option *ngFor="let make of makes$ | async" [value]="make.value">
               {{make.value}}
             </mat-option>
           </mat-select>
@@ -11,7 +11,7 @@
         <mat-form-field>
           <mat-label>Model</mat-label>
             <mat-select formControlName="models" multiple>
-            <mat-option *ngFor="let model of models" [value]="model.value">
+            <mat-option *ngFor="let model of models$ | async" [value]="model.value">
               {{model.value}}
             </mat-option>
           </mat-select>

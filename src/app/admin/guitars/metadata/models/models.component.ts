@@ -1,10 +1,12 @@
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { MakesService } from './../makes/makes.service';
+import { take } from 'rxjs/operators';
 import { ModelsService } from './models.service';
 import { Model } from './model.model';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { Make } from '../makes/make.model';
+
+import * as fromRoot from '../../../../app.reducer';
 
 @Component({
   selector: 'app-models',
@@ -14,27 +16,25 @@ import { Make } from '../makes/make.model';
 export class ModelsComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['modelID', 'value', 'addDate', 'delete'];
   dataSource: MatTableDataSource<Model>;
-  models: Model[] = [];
 
   modelSubscription: Subscription;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private modelsService: ModelsService) {}
+  constructor(private modelsService: ModelsService,
+                     private store: Store<fromRoot.State>) {}
 
   private getModels() {
-    this.models = this.modelsService.getModels();
-    this.dataSource = new MatTableDataSource(this.models);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.store.select(fromRoot.getModels).subscribe(models => {
+      this.dataSource = new MatTableDataSource(models);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
 
   ngOnInit() {
-    this.modelSubscription = this.modelsService.modelsChanged.subscribe(() => {
-      this.getModels();
-    });
     this.getModels();
   }
 
@@ -48,6 +48,7 @@ export class ModelsComponent implements OnInit, OnDestroy {
 
   onDelete(modelID: number) {
     this.modelsService.RemoveModel(modelID);
+    this.getModels();
   }
 
   ngOnDestroy() {

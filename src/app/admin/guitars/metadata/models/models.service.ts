@@ -1,44 +1,40 @@
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { Model } from './model.model';
 import { UIService } from './../../../../shared/ui.service';
+
+import * as fromRoot from '../../../../app.reducer';
+import * as Metadata from '../metadata.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModelsService {
-  public modelsChanged = new Subject<void>();
-  private models: Model[] = [
-    new Model(1, 'Les Paul', new Date('11/14/2019')),
-    new Model(2, 'SG', new Date('11/14/2019')),
-    new Model(3, 'Stratocaster', new Date('11/14/2019')),
-    new Model(4, 'Telecaster', new Date('11/14/2019')),
-  ];
-  private nextModelID = 5;
-  constructor(private uiService: UIService) {
+  private nextModelID = 6;
+  constructor(private uiService: UIService,
+                     private store: Store<fromRoot.State>) {
   }
-
-  getModels() {
-    return [...this.models];
-  }
-
   AddModel(value: string) {
-    const newModelID = this.nextModelID++;
-
-    this.models.push(new Model(newModelID, value, new Date()));
-    this.modelsChanged.next();
-    this.uiService.showSnackbar('Model Added!');
+    this.store.select(fromRoot.getModels).pipe(take(1)).subscribe(models => {
+      const newModelID = this.nextModelID++;
+      models.push(new Model(newModelID, value, new Date()));
+      this.store.dispatch(new Metadata.SetModels([...models]));
+      this.uiService.showSnackbar('Model Added!');
+    });
   }
 
   RemoveModel(ModelID: number) {
-    const index = this.models.findIndex(model => model.modelID === ModelID);
-    if (index >= 0) {
-      this.models.splice(index, 1);
-      this.modelsChanged.next();
-      this.uiService.showSnackbar('Make Removed!');
-    } else {
-      this.uiService.showSnackbar('Invalid MakeID: ' + ModelID);
-    }
+    this.store.select(fromRoot.getModels).pipe(take(1)).subscribe(models => {
+      const index = models.findIndex(model => model.modelID === ModelID);
+      if (index >= 0) {
+        models.splice(index, 1);
+        this.store.dispatch(new Metadata.SetModels([...models]));
+        this.uiService.showSnackbar('Model Removed!');
+      } else {
+        this.uiService.showSnackbar('Invalid MakeID: ' + ModelID);
+      }
+    });
   }
 }
