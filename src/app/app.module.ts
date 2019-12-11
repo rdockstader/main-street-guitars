@@ -1,3 +1,4 @@
+import { ShareDialogComponent } from './home/guitars/shareDialog.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,7 +25,8 @@ import { reducers } from './app.reducer';
   declarations: [
     AppComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    ShareDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import { reducers } from './app.reducer';
     AuthService,
     GuitarService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ShareDialogComponent]
 })
 export class AppModule { }

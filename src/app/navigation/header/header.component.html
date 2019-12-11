@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="app-toolbar">
   <div  fxHide.gt-xs>
     <button mat-icon-button (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
@@ -8,16 +8,16 @@
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
       <li *ngIf="isAdmin$ | async">
-        <a [routerLink]="['/admin']">Site Admin</a>
+        <a mat-raised-button [routerLink]="['/admin']">Site Admin</a>
       </li>
       <li *ngIf="!(isAuth$ | async)">
-        <a [routerLink]="['/signup']" >Sign up</a>
+        <a  mat-raised-button [routerLink]="['/signup']" color="primary">Sign up</a>
       </li>
       <li *ngIf="!(isAuth$ | async)">
-        <a [routerLink]="['/login']" >Login</a>
+        <a  mat-raised-button [routerLink]="['/login']" color="accent">Login</a>
       </li>
       <li *ngIf="(isAuth$ | async)">
-        <a (click)="onLogout()">Logout</a>
+        <a  mat-raised-button (click)="onLogout()" color="accent">Logout</a>
       </li>
     </ul>
   </div>

@@ -1,0 +1,7 @@
+.filter {
+  background-color: #A1887E;
+  padding: 10px;
+  border: solid #302825 1px;
+  border-radius: 5px;
+  color: rgba(255, 255, 255, 0.61) !important;
+}
