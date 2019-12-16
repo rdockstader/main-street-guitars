@@ -4,6 +4,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './navigation/header/header.component';
@@ -24,6 +25,7 @@ import { reducers } from './app.reducer';
 import { environment } from 'src/environments/environment';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { environment } from 'src/environments/environment';
     HomeModule,
     StoreModule.forRoot(reducers),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [
     AuthService,
