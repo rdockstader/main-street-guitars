@@ -1,13 +1,13 @@
 export class Make {
-  public makeID: number;
+  public id: string;
   public value: string;
   public addDate: Date;
 
-  constructor(MakeID: number,
+  constructor(MakeID: string,
               Value: string,
               AddDate: Date) {
 
-      this.makeID = MakeID;
+      this.id = MakeID;
       this.value = Value;
       this.addDate = AddDate;
   }

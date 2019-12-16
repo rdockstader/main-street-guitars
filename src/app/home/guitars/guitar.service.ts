@@ -1,56 +1,75 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { Guitar } from './guitar.model';
 import { UIService } from './../../shared/ui.service';
 import { GuitarFilter } from './guitarFilter.model';
 import { Store } from '@ngrx/store';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 import * as fromRoot from '../../app.reducer';
 import * as GuitarActions from './guitar.actions';
 
 @Injectable()
 export class GuitarService {
+  private guitarCollectionName = 'guitars';
 
   constructor(private uiService: UIService,
-              private store: Store<fromRoot.State>) {}
+              private store: Store<fromRoot.State>,
+              private db: AngularFirestore) {}
 
-  // TODO: add fetch guitar(s)
+  fetchGuitars() {
+    this.db
+    .collection(this.guitarCollectionName)
+    .snapshotChanges()
+    .pipe(map(docArray => {
+      return docArray.map(doc => {
+        return {
+          id: doc.payload.doc.id,
+          make: doc.payload.doc.data()['make'],
+          model: doc.payload.doc.data()['model'],
+          subModel: doc.payload.doc.data()['subModel'],
+          imageUrl: doc.payload.doc.data()['imageUrl'],
+          color: doc.payload.doc.data()['color'],
+          description: doc.payload.doc.data()['description'],
+          price: doc.payload.doc.data()['price'],
+          addDate: doc.payload.doc.data()['addDate'],
+        };
+      });
+    })).subscribe((guitars: Guitar[]) => {
+      console.log(guitars);
+      this.store.dispatch(new GuitarActions.SetGuitars(guitars));
+      this.store.dispatch(new GuitarActions.SetFilteredGuitars(guitars));
+    });
+  }
 
   addGuitar(guitar: Guitar) {
-    this.store.select(fromRoot.getGuitars).subscribe(guitars => {
-      guitar.id = Math.round(Math.random() * 1000).toString();
-      guitar.addDate = new Date();
-      guitars.push(guitar);
+    guitar.addDate = new Date();
+    delete guitar.id;
+    console.log(guitar);
+    this.db.collection(this.guitarCollectionName).add(guitar).then(() => {
       this.uiService.showSnackbar('Guitar created');
-      this.store.dispatch(new GuitarActions.SetGuitars(guitars));
+      this.fetchGuitars();
     });
   }
 
   updateguitar(guitar: Guitar) {
-    this.store.select(fromRoot.getGuitars).subscribe(guitars => {
-      const index = guitars.findIndex(g => g.id === guitar.id);
-      if (index < 0) {
-        this.uiService.showSnackbar('Guitar ID not found');
-      } else {
-        guitars[index] = guitar;
-        this.uiService.showSnackbar('Guitar Updated');
-        this.store.dispatch(new GuitarActions.SetGuitars(guitars));
-      }
+    this.db.collection(this.guitarCollectionName).doc(guitar.id).update(guitar).then(() => {
+      this.uiService.showSnackbar('Guitar Updated');
+      this.fetchGuitars();
+    }).catch(err => {
+      console.log(err);
+      this.uiService.showSnackbar('Guitar ID not found');
     });
   }
 
   removeGuitar(id: string) {
-    this.store.select(fromRoot.getGuitars).subscribe(guitars => {
-      const index = guitars.findIndex(g => g.id === id);
-      console.log('index: ' + index + ' | id: ' + id);
-      if (index >= 0) {
-        guitars.splice(index, 1);
-        this.uiService.showSnackbar('Guitar Removed');
-        this.store.dispatch(new GuitarActions.SetGuitars(guitars));
-      } else {
+    this.db.collection(this.guitarCollectionName).doc(id).delete().then(() => {
+      this.uiService.showSnackbar('Guitar Removed');
+      this.fetchGuitars();
+    }).catch(err => {
+      console.log(err);
       this.uiService.showSnackbar('Guitar not found');
-      }
     });
   }
 

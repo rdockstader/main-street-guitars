@@ -1,13 +1,14 @@
-import { ShareDialogComponent } from './home/guitars/shareDialog.component';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { ShareDialogComponent } from './home/guitars/shareDialog.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -19,6 +20,8 @@ import { AuthService } from './auth/auth.service';
 import { GuitarService } from './home/guitars/guitar.service';
 
 import { reducers } from './app.reducer';
+
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -36,7 +39,9 @@ import { reducers } from './app.reducer';
     AuthModule,
     AdminModule,
     HomeModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [
     AuthService,

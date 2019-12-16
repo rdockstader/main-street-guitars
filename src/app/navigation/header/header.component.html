@@ -8,7 +8,7 @@
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="10px" class="navigation-items">
       <li *ngIf="isAdmin$ | async">
-        <a mat-raised-button [routerLink]="['/admin']">Site Admin</a>
+        <a mat-raised-button [routerLink]="['/admin']" color="primary">Site Admin</a>
       </li>
       <li *ngIf="!(isAuth$ | async)">
         <a  mat-raised-button [routerLink]="['/signup']" color="primary">Sign up</a>

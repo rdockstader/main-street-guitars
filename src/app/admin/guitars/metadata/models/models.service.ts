@@ -1,40 +1,57 @@
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { Model } from './model.model';
 import { UIService } from './../../../../shared/ui.service';
 
 import * as fromRoot from '../../../../app.reducer';
 import * as Metadata from '../metadata.actions';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModelsService {
-  private nextModelID = 6;
+  private modelsCollectionName = 'models';
   constructor(private uiService: UIService,
-                     private store: Store<fromRoot.State>) {
+              private store: Store<fromRoot.State>,
+              private db: AngularFirestore) {
   }
-  AddModel(value: string) {
-    this.store.select(fromRoot.getModels).pipe(take(1)).subscribe(models => {
-      const newModelID = this.nextModelID++;
-      models.push(new Model(newModelID, value, new Date()));
-      this.store.dispatch(new Metadata.SetModels([...models]));
-      this.uiService.showSnackbar('Model Added!');
+
+  FetchModels() {
+    this.db
+    .collection(this.modelsCollectionName)
+    .snapshotChanges()
+    .pipe(map(docArray => {
+      return docArray.map(doc => {
+        return new Model(doc.payload.doc.id,
+                        doc.payload.doc.data()['Value'],
+                        doc.payload.doc.data()['AddDate'].toDate());
+      });
+    })).subscribe((models: Model[]) => {
+      console.log(models);
+      this.store.dispatch(new Metadata.SetModels(models));
     });
   }
 
-  RemoveModel(ModelID: number) {
-    this.store.select(fromRoot.getModels).pipe(take(1)).subscribe(models => {
-      const index = models.findIndex(model => model.modelID === ModelID);
-      if (index >= 0) {
-        models.splice(index, 1);
-        this.store.dispatch(new Metadata.SetModels([...models]));
-        this.uiService.showSnackbar('Model Removed!');
-      } else {
-        this.uiService.showSnackbar('Invalid MakeID: ' + ModelID);
-      }
+  AddModel(value: string) {
+    this.db.collection(this.modelsCollectionName).add({Value: value, AddDate: new Date()}).then(() => {
+      this.uiService.showSnackbar('Model Added!');
+      this.FetchModels();
+    }).catch(err => {
+      console.log(err);
+      this.uiService.showSnackbar('Failed to add model!');
+    });
+  }
+
+  RemoveModel(ModelID: string) {
+    this.db.collection(this.modelsCollectionName).doc(ModelID).delete().then(() => {
+      this.uiService.showSnackbar('Model Removed!');
+      this.FetchModels();
+    }).catch(err => {
+      console.log(err);
+      this.uiService.showSnackbar('Failed to remove make!');
     });
   }
 }

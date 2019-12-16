@@ -1,14 +1,14 @@
 import { Make } from './../makes/make.model';
 export class Model {
-  public modelID: number;
+  public id: string;
   public value: string;
   public addDate: Date;
 
-  constructor(modelID: number,
+  constructor(id: string,
               Value: string,
               AddDate: Date) {
 
-      this.modelID = modelID;
+      this.id = id;
       this.value = Value;
       this.addDate = AddDate;
   }

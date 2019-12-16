@@ -32,6 +32,8 @@ export class AddGuitarComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
 
   constructor(private guitarSerice: GuitarService,
+              private makesService: MakesService,
+              private modelsService: ModelsService,
               private route: ActivatedRoute,
               private store: Store<fromRoot.State>) { }
 
@@ -52,6 +54,8 @@ export class AddGuitarComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.makesService.FetchMakes();
+    this.modelsService.FetchModels();
     this.makes$ = this.store.select(fromRoot.getMakes);
     this.models$ = this.store.select(fromRoot.getModels);
     this.initForm();

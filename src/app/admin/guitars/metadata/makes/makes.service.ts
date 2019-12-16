@@ -1,6 +1,7 @@
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { Make } from './make.model';
 import { UIService } from 'src/app/shared/ui.service';
@@ -12,28 +13,44 @@ import * as fromRoot from '../../../../app.reducer';
   providedIn: 'root'
 })
 export class MakesService {
-  private nextMakeID = 8;
-  constructor(private uiService: UIService, private store: Store<fromRoot.State>) {}
+  private makesCollectionName = 'makes';
+  constructor(private uiService: UIService,
+              private store: Store<fromRoot.State>,
+              private db: AngularFirestore) {}
 
-  AddMake(value: string) {
-    this.store.select(fromRoot.getMakes).pipe(take(1)).subscribe(makes => {
-      const newMakeID = this.nextMakeID++;
-      makes.push(new Make(newMakeID, value, new Date()));
-      this.store.dispatch(new Metadata.SetMakes([...makes]));
-      this.uiService.showSnackbar('Make Added!');
+  FetchMakes() {
+    this.db
+    .collection(this.makesCollectionName)
+    .snapshotChanges()
+    .pipe(map(docArray => {
+      return docArray.map(doc => {
+        return new Make(doc.payload.doc.id,
+                        doc.payload.doc.data()['Value'],
+                        doc.payload.doc.data()['AddDate'].toDate());
+      });
+    })).subscribe((makes: Make[]) => {
+      console.log(makes);
+      this.store.dispatch(new Metadata.SetMakes(makes));
     });
   }
 
-  RemoveMake(MakeID: number) {
-    this.store.select(fromRoot.getMakes).pipe(take(1)).subscribe(makes => {
-      const index = makes.findIndex(make => make.makeID === MakeID);
-      if (index >= 0) {
-        makes.splice(index, 1);
-        this.store.dispatch(new Metadata.SetMakes([...makes]));
-        this.uiService.showSnackbar('Make Removed!');
-      } else {
-        this.uiService.showSnackbar('Invalid MakeID: ' + MakeID);
-      }
+  AddMake(value: string) {
+    this.db.collection(this.makesCollectionName).add({Value: value, AddDate: new Date()}).then(() => {
+      this.uiService.showSnackbar('Make Added!');
+      this.FetchMakes();
+    }).catch(err => {
+      console.log(err);
+      this.uiService.showSnackbar('Failed to add make!');
+    });
+  }
+
+  RemoveMake(id: string) {
+    this.db.collection(this.makesCollectionName).doc(id).delete().then(() => {
+      this.uiService.showSnackbar('Make Removed!');
+      this.FetchMakes();
+    }).catch(err => {
+      console.log(err);
+      this.uiService.showSnackbar('Failed to remove make!');
     });
   }
 }

@@ -19,9 +19,11 @@ export class GuitarsComponent implements OnInit {
 
   constructor(private store: Store<fromRoot.State>,
               private uiService: UIService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private guitarService: GuitarService) { }
 
   ngOnInit() {
+    this.guitarService.fetchGuitars();
     this.guitars$ = this.store.select(fromRoot.getFilteredGuitars);
   }
 
@@ -44,7 +46,7 @@ export class GuitarsComponent implements OnInit {
         messasge += 'production website! Thanks for sharing!';
         this.uiService.showSnackbar(messasge);
       }
-    })
+    });
   }
 
 }

@@ -1,3 +1,5 @@
+import { ModelsService } from './../../../admin/guitars/metadata/models/models.service';
+import { MakesService } from './../../../admin/guitars/metadata/makes/makes.service';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -23,9 +25,13 @@ export class GuitarsFiltersComponent implements OnInit {
 
 
   constructor(private guitarService: GuitarService,
+              private makesService: MakesService,
+              private modelsService: ModelsService,
               private store: Store<fromRoot.State>) { }
 
   ngOnInit() {
+    this.makesService.FetchMakes();
+    this.modelsService.FetchModels();
     this.makes$ = this.store.select(fromRoot.getMakes);
     this.models$ = this.store.select(fromRoot.getModels);
     this.initForm();
