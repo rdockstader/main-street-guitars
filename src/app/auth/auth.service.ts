@@ -23,13 +23,13 @@ export class AuthService {
     if (authData.email === 'admin@msg.com') {
       this.user = {
         email: authData.email,
-        userId: Math.round(Math.random() * 1000).toString(),
+        id: Math.round(Math.random() * 1000).toString(),
         userType: 'admin'
       };
     } else {
       this.user = {
         email: authData.email,
-        userId: Math.round(Math.random() * 1000).toString(),
+        id: Math.round(Math.random() * 1000).toString(),
         userType: 'general'
       };
     }

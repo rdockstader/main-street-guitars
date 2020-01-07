@@ -42,7 +42,7 @@ export class MakesComponent implements OnInit {
     }
   }
 
-  onDelete(makeID: number) {
+  onDelete(makeID: string) {
     this.makesService.RemoveMake(makeID);
     this.getMakes();
   }

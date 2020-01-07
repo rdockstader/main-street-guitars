@@ -18,13 +18,13 @@ export class MakesService {
   AddMake(value: string) {
     this.store.select(fromRoot.getMakes).pipe(take(1)).subscribe(makes => {
       const newMakeID = this.nextMakeID++;
-      makes.push(new Make(newMakeID, value, new Date()));
+      makes.push(new Make('' + newMakeID, value, new Date()));
       this.store.dispatch(new Metadata.SetMakes([...makes]));
       this.uiService.showSnackbar('Make Added!');
     });
   }
 
-  RemoveMake(MakeID: number) {
+  RemoveMake(MakeID: string) {
     this.store.select(fromRoot.getMakes).pipe(take(1)).subscribe(makes => {
       const index = makes.findIndex(make => make.makeID === MakeID);
       if (index >= 0) {

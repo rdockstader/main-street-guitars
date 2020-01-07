@@ -1,9 +1,9 @@
 export class Make {
-  public makeID: number;
+  public makeID: string;
   public value: string;
   public addDate: Date;
 
-  constructor(MakeID: number,
+  constructor(MakeID: string,
               Value: string,
               AddDate: Date) {
 

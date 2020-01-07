@@ -1,10 +1,10 @@
 import { Make } from './../makes/make.model';
 export class Model {
-  public modelID: number;
+  public modelID: string;
   public value: string;
   public addDate: Date;
 
-  constructor(modelID: number,
+  constructor(modelID: string,
               Value: string,
               AddDate: Date) {
 

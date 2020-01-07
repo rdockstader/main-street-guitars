@@ -23,7 +23,7 @@ export class ModelsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private modelsService: ModelsService,
-                     private store: Store<fromRoot.State>) {}
+              private store: Store<fromRoot.State>) {}
 
   private getModels() {
     this.store.select(fromRoot.getModels).subscribe(models => {
@@ -46,7 +46,7 @@ export class ModelsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDelete(modelID: number) {
+  onDelete(modelID: string) {
     this.modelsService.RemoveModel(modelID);
     this.getModels();
   }
