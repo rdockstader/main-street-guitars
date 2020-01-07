@@ -28,7 +28,7 @@ export class AuthService {
     this.store.dispatch(new UI.StartLoading());
     // authentication
     this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
-    .then(result => {
+    .then(authResult => {
       // authorization
       this.db.collection(this.userCollectionName).add({email: authData.email, userType: 'user'}).then(result => {
         this.authSuccessful();
