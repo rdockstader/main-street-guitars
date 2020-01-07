@@ -26,6 +26,7 @@ export class ModelsComponent implements OnInit, OnDestroy {
               private store: Store<fromRoot.State>) {}
 
   private getModels() {
+    this.modelsService.FetchModels();
     this.store.select(fromRoot.getModels).subscribe(models => {
       this.dataSource = new MatTableDataSource(models);
       this.dataSource.paginator = this.paginator;

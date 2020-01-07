@@ -12,21 +12,8 @@ export interface State {
 }
 
 const initialState: State = {
-  makes: [
-    new Make('1', 'Gibson', new Date('11/14/2019')),
-    new Make('2', 'Epiphone', new Date('11/14/2019')),
-    new Make('3', 'Squire', new Date('11/14/2019')),
-    new Make('4', 'Fender', new Date('11/14/2019')),
-    new Make('5', 'Martin', new Date('11/14/2019')),
-    new Make('6', 'Taylor', new Date('11/14/2019')),
-  ],
-  models: [
-    new Model('1', 'Les Paul', new Date('11/14/2019')),
-    new Model('2', 'SG', new Date('11/14/2019')),
-    new Model('3', 'Stratocaster', new Date('11/14/2019')),
-    new Model('4', 'Telecaster', new Date('11/14/2019')),
-    new Model('5', 'GS Mini', new Date())
-  ]
+  makes: [],
+  models: []
 };
 
 export function metadataReducer(state = initialState, action: MetadataActions) {
