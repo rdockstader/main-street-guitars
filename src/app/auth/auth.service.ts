@@ -1,10 +1,14 @@
 import { UIService } from './../shared/ui.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFirestore  } from '@angular/fire/firestore';
+import { AngularFireAuth  } from '@angular/fire/auth';
+
+import { Store } from '@ngrx/store';
 
 import { AuthData } from './auth-data.model';
 import { User } from './user.model';
-import { Store } from '@ngrx/store';
+
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as Auth from './auth.actions';
@@ -13,36 +17,50 @@ import * as Auth from './auth.actions';
 
 @Injectable()
 export class AuthService {
+  private userCollectionName = 'users';
   private user: User;
 
   constructor(private router: Router,
               private uiService: UIService,
-              private store: Store<fromRoot.State>) {}
+              private store: Store<fromRoot.State>,
+              private afAuth: AngularFireAuth,
+              private db: AngularFirestore) {}
 
-  registerUser(authData: AuthData) {
-    if (authData.email === 'admin@msg.com') {
-      this.user = {
-        email: authData.email,
-        id: Math.round(Math.random() * 1000).toString(),
-        userType: 'admin'
-      };
-    } else {
-      this.user = {
-        email: authData.email,
-        id: Math.round(Math.random() * 1000).toString(),
-        userType: 'general'
-      };
-    }
-    this.authSuccessful();
-    this.store.dispatch(new UI.StopLoading());
-  }
+              registerUser(authData: AuthData) {
+                this.store.dispatch(new UI.StartLoading());
+                // authentication
+                this.afAuth.auth.createUserWithEmailAndPassword(authData.email, authData.password)
+                .then(authResult => {
+                  // authorization
+                  this.db.collection(this.userCollectionName).add({email: authData.email, userType: 'user'}).then(result => {
+                    this.authSuccessful();
+                    this.store.dispatch(new UI.StopLoading());
+                  }).catch(error => {
+                    console.log(error);
+                    this.store.dispatch(new UI.StopLoading());
+                  });
+                })
+                .catch(err => {
+                  console.log(err);
+                  this.store.dispatch(new UI.StopLoading());
+                });
+              }
 
-  login(authData: AuthData) {
-    this.store.dispatch(new UI.StartLoading());
-    // TODO: replace with actual login
-    this.registerUser(authData);
-
-  }
+              login(authData: AuthData) {
+                this.afAuth.auth.signInWithEmailAndPassword(authData.email, authData.password)
+                .then(result => {
+                  // authorization
+                  this.db.collection(this.userCollectionName, ref => ref.where('email', '==', authData.email).limit(1))
+                      .get().subscribe(r => {
+                        this.user = {email: authData.email, userType: r.docs[0].data().userType, id: r.docs[0].id};
+                        this.authSuccessful();
+                      });
+                })
+                .catch(err => {
+                  this.uiService.showSnackbar(err.message);
+                  this.store.dispatch(new UI.StopLoading());
+                });
+              }
 
   logout() {
     this.user = null;
