@@ -5,7 +5,7 @@ import { Guitar } from './guitar.model';
 import { UIService } from './../../shared/ui.service';
 import { GuitarFilter } from './guitarFilter.model';
 import { Store } from '@ngrx/store';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import * as fromRoot from '../../app.reducer';
 import * as GuitarActions from './guitar.actions';
