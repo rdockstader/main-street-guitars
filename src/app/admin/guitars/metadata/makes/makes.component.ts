@@ -23,6 +23,7 @@ export class MakesComponent implements OnInit {
   constructor(private makesService: MakesService, private store: Store<fromRoot.State>) {}
 
   private getMakes() {
+    this.makesService.FetchMakes();
     this.store.select(fromRoot.getMakes).subscribe(makes => {
       this.dataSource = new MatTableDataSource(makes);
       this.dataSource.paginator = this.paginator;

@@ -5,7 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { AuthData } from './auth-data.model';
 import { User } from './user.model';
-import { Store } from '@ngrx/store';
+
 import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as Auth from './auth.actions';
@@ -15,6 +15,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 
 @Injectable()
 export class AuthService {
+  private userCollectionName = 'users';
   private user: User;
   private userCollectionName = 'users';
 
