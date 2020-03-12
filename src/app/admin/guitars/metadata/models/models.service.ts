@@ -7,7 +7,7 @@ import { UIService } from './../../../../shared/ui.service';
 
 import * as fromRoot from '../../../../app.reducer';
 import * as Metadata from '../metadata.actions';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
